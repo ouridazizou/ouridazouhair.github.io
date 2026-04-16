@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ourida Zouhair — Android & KMP Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#D4A847;--gold-light:#F0C96A;--gold-pale:rgba(212,168,71,0.10);--gold-border:rgba(212,168,71,0.28);--bg:#080808;--bg1:#0F0F0F;--bg2:#161616;--bg3:#1E1E1E;--bg4:#272727;--text:#EDEAE2;--text2:#9A9790;--text3:#565350;--white:#FFFFFF;--r:6px;--r-lg:10px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-weight:400;line-height:1.7;-webkit-font-smoothing:antialiased;font-size:15px;}
+h1,h2,h3{font-family:'Playfair Display',serif;font-weight:500;line-height:1.15;}
+.label{font-size:0.67rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(8,8,8,0.96);border-bottom:1px solid rgba(255,255,255,0.055);backdrop-filter:blur(20px);}
+.nav-brand{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.nav-mono{width:32px;height:32px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:500;color:#000;border-radius:5px;flex-shrink:0;}
+.nav-name{font-size:0.85rem;font-weight:500;color:var(--text);letter-spacing:0.02em;}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{text-decoration:none;font-size:0.77rem;font-weight:400;color:var(--text2);letter-spacing:0.04em;transition:color 0.2s;}
+.nav-links a:hover{color:var(--gold);}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:100px 56px 70px;gap:72px;position:relative;overflow:hidden;}
+.hero-glow{position:absolute;top:-80px;right:-120px;width:560px;height:560px;background:radial-gradient(circle,rgba(212,168,71,0.07) 0%,transparent 65%);pointer-events:none;}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--gold-border);border-radius:100px;margin-bottom:26px;}
+.hero-pill-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;}
+.hero-pill span{font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);}
+h1.hero-name{font-size:clamp(2.8rem,5vw,4.8rem);font-weight:500;color:var(--white);margin-bottom:6px;letter-spacing:-0.01em;}
+.hero-subtitle{font-size:clamp(1rem,1.8vw,1.4rem);font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);margin-bottom:26px;}
+.hero-desc{font-size:0.93rem;color:var(--text2);line-height:1.85;max-width:430px;margin-bottom:38px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-a{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;background:var(--gold);color:#000;font-size:0.75rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;text-decoration:none;border-radius:var(--r);transition:background 0.2s,transform 0.15s;}
+.btn-a:hover{background:var(--gold-light);transform:translateY(-1px);}
+.btn-b{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;background:transparent;color:var(--text);font-size:0.75rem;font-weight:500;letter-spacing:0.09em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,0.11);border-radius:var(--r);transition:border-color 0.2s,background 0.2s;}
+.btn-b:hover{border-color:var(--gold-border);background:var(--gold-pale);}
+.hero-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative;z-index:1;}
+.hcard{background:var(--bg2);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r-lg);padding:22px;transition:border-color 0.2s;}
+.hcard:hover{border-color:var(--gold-border);}
+.hcard.wide{grid-column:1/-1;background:var(--gold-pale);border-color:var(--gold-border);}
+.hcard-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:500;color:var(--gold);line-height:1;margin-bottom:4px;}
+.hcard-lbl{font-size:0.77rem;color:var(--text2);}
+.hcard-sub{font-size:0.8rem;color:var(--text2);margin-top:8px;line-height:1.6;}
+
+/* SECTION BASE */
+section{padding:96px 56px;}
+.s-head{margin-bottom:56px;}
+.s-head .label{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.s-head .label::after{content:'';width:32px;height:1px;background:var(--gold);opacity:0.5;}
+.s-head h2{font-size:clamp(2rem,3.5vw,2.8rem);color:var(--white);}
+.s-head p{font-size:0.92rem;color:var(--text2);max-width:520px;margin-top:12px;line-height:1.85;}
+.divider{height:1px;background:rgba(255,255,255,0.045);}
+
+/* ABOUT */
+#about{background:var(--bg1);}
+.about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:72px;align-items:start;}
+.about-text p{font-size:0.93rem;color:var(--text2);line-height:1.9;margin-bottom:18px;}
+.about-text p:last-child{margin-bottom:0;}
+.hl{color:var(--text);font-weight:500;}
+.sk-head{font-size:0.67rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.055);}
+.sk-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.sk-name{font-size:0.87rem;color:var(--text);}
+.sk-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;padding:3px 10px;border-radius:100px;background:var(--bg3);color:var(--text3);}
+.sk-tag.e{background:var(--gold-pale);color:var(--gold);border:1px solid var(--gold-border);}
+
+/* ═══════════════════════════════════
+   APPS SECTION
+═══════════════════════════════════ */
+#apps{background:var(--bg);}
+.apps-list{display:flex;flex-direction:column;gap:48px;}
+
+/* App card */
+.app-card{background:var(--bg1);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-lg);overflow:hidden;transition:border-color 0.3s;}
+.app-card:hover{border-color:var(--gold-border);}
+.app-hd{padding:32px 40px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:flex-start;gap:20px;}
+.app-ico{width:64px;height:64px;background:var(--bg3);border:1px solid rgba(255,255,255,0.08);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0;}
+.app-hd-info{flex:1;}
+.app-nm{font-size:1.8rem;font-weight:500;font-family:'Playfair Display',serif;color:var(--white);margin-bottom:4px;}
+.app-tl{font-size:0.87rem;font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);}
+.app-status-badge{margin-left:auto;flex-shrink:0;display:inline-flex;align-items:center;gap:7px;padding:6px 13px;border:1px solid var(--gold-border);border-radius:100px;background:var(--gold-pale);}
+.app-status-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.app-status-badge span{font-size:0.67rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);}
+
+/* App main body: desc + specs */
+.app-bd{display:grid;grid-template-columns:1.4fr 1fr;}
+.app-left{padding:32px 40px;border-right:1px solid rgba(255,255,255,0.06);}
+.app-desc{font-size:0.91rem;color:var(--text2);line-height:1.9;margin-bottom:24px;}
+.tech-lbl{font-size:0.65rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.tags{display:flex;flex-wrap:wrap;gap:7px;}
+.tag{padding:5px 11px;background:var(--bg3);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r);font-size:0.74rem;color:var(--text2);}
+.app-right{padding:32px 28px;}
+.spec{padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.spec:last-child{border-bottom:none;}
+.spec-lbl{font-size:0.64rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.spec-val{font-size:0.87rem;color:var(--text);}
+
+/* ─── TABS (Privacy / App-Ads) ─── */
+.app-tabs-wrap{border-top:1px solid rgba(255,255,255,0.06);}
+.app-tabs-nav{display:flex;border-bottom:1px solid rgba(255,255,255,0.06);background:var(--bg2);}
+.tab-btn{flex:1;padding:14px 20px;background:transparent;border:none;cursor:pointer;font-family:'Inter',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;justify-content:center;gap:8px;transition:color 0.2s,background 0.2s;border-right:1px solid rgba(255,255,255,0.06);}
+.tab-btn:last-child{border-right:none;}
+.tab-btn:hover{color:var(--text2);background:var(--bg3);}
+.tab-btn.active{color:var(--gold);background:var(--bg1);border-bottom:2px solid var(--gold);margin-bottom:-1px;}
+.tab-icon{font-size:0.9rem;}
+.tab-panel{display:none;padding:36px 40px;}
+.tab-panel.active{display:block;}
+
+/* Privacy Policy panel */
+.pp-meta-bar{display:flex;flex-wrap:wrap;border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-lg);overflow:hidden;margin-bottom:36px;}
+.pp-meta-item{flex:1;min-width:140px;padding:16px 20px;background:var(--bg2);border-right:1px solid rgba(255,255,255,0.07);}
+.pp-meta-item:last-child{border-right:none;}
+.pp-meta-lbl{font-size:0.63rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:5px;}
+.pp-meta-val{font-size:0.85rem;color:var(--text);font-weight:500;}
+.pp-list{border:1px solid rgba(255,255,255,0.06);border-radius:var(--r-lg);overflow:hidden;}
+.pp-row{display:grid;grid-template-columns:48px 1fr;border-bottom:1px solid rgba(255,255,255,0.05);}
+.pp-row:last-child{border-bottom:none;}
+.pp-n{padding:20px 0 20px 16px;font-family:'Playfair Display',serif;font-size:0.9rem;color:var(--text3);border-right:1px solid rgba(255,255,255,0.05);display:flex;align-items:flex-start;justify-content:center;}
+.pp-body{padding:20px 26px;}
+.pp-ttl{font-size:0.86rem;font-weight:600;color:var(--text);margin-bottom:8px;}
+.pp-txt{font-size:0.84rem;color:var(--text2);line-height:1.85;}
+.pp-txt ul{list-style:none;margin-top:7px;}
+.pp-txt ul li{padding:3px 0 3px 16px;position:relative;font-size:0.84rem;color:var(--text2);}
+.pp-txt ul li::before{content:'–';position:absolute;left:0;color:var(--gold);}
+.pp-txt a{color:var(--gold);text-decoration:none;}
+.pp-txt strong{color:var(--text);font-weight:500;}
+
+/* App-Ads panel */
+.ads-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}
+.ads-intro{font-size:0.9rem;color:var(--text2);line-height:1.9;margin-bottom:24px;}
+.url-box{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--gold-pale);border:1px solid var(--gold-border);border-radius:var(--r);margin-bottom:24px;}
+.url-lbl{font-size:0.61rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap;flex-shrink:0;}
+.url-val{font-family:'Courier New',monospace;font-size:0.78rem;color:var(--gold-light);word-break:break-all;}
+.code-box{background:var(--bg2);border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-lg);overflow:hidden;}
+.code-hd{padding:11px 16px;background:var(--bg3);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between;}
+.code-fn{font-size:0.73rem;font-weight:600;color:var(--text2);font-family:'Courier New',monospace;}
+.code-chip{font-size:0.61rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:3px 9px;background:var(--gold-pale);color:var(--gold);border-radius:100px;border:1px solid var(--gold-border);}
+.code-bd{padding:20px;font-family:'Courier New',monospace;font-size:0.79rem;line-height:2.1;}
+.cc{color:var(--text3);}
+.ck{color:var(--gold-light);}
+.cv{color:#7DC4A8;}
+.cx{color:#A78BFA;}
+.ibox{margin-top:20px;padding:16px 20px;background:var(--bg2);border:1px solid rgba(255,255,255,0.07);border-left:3px solid var(--gold);border-radius:var(--r);}
+.ibox p{font-size:0.8rem;color:var(--text2);line-height:1.8;}
+.ibox code{font-family:'Courier New',monospace;font-size:0.76rem;color:var(--gold);background:var(--bg3);padding:1px 6px;border-radius:3px;}
+.steps-lbl{font-size:0.66rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3);margin-bottom:16px;}
+.steps{display:flex;flex-direction:column;border:1px solid rgba(255,255,255,0.07);border-radius:var(--r-lg);overflow:hidden;}
+.st{display:flex;border-bottom:1px solid rgba(255,255,255,0.055);}
+.st:last-child{border-bottom:none;}
+.st-n{width:52px;padding:20px 0;background:var(--bg2);display:flex;align-items:flex-start;justify-content:center;border-right:1px solid rgba(255,255,255,0.055);flex-shrink:0;}
+.st-num{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold);}
+.st-bd{padding:20px 24px;background:var(--bg1);}
+.st-ttl{font-size:0.86rem;font-weight:600;color:var(--text);margin-bottom:5px;}
+.st-desc{font-size:0.8rem;color:var(--text2);line-height:1.7;}
+.st-desc code{font-family:'Courier New',monospace;font-size:0.75rem;background:var(--bg3);color:var(--gold);padding:1px 6px;border-radius:3px;}
+
+/* App footer */
+.app-ft{padding:16px 40px;border-top:1px solid rgba(255,255,255,0.06);background:var(--bg2);display:flex;align-items:center;justify-content:space-between;}
+.store-lnk{display:inline-flex;align-items:center;gap:7px;font-size:0.75rem;color:var(--text3);text-decoration:none;letter-spacing:0.05em;text-transform:uppercase;font-weight:500;transition:color 0.2s;}
+.store-lnk:hover{color:var(--gold);}
+.cs{font-size:0.71rem;color:var(--text3);letter-spacing:0.07em;}
+
+/* CONTACT */
+#contact{background:var(--bg1);display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.ct-left h2{font-size:clamp(1.9rem,3.2vw,2.7rem);color:var(--white);margin-bottom:18px;}
+.ct-left p{font-size:0.92rem;color:var(--text2);line-height:1.9;margin-bottom:32px;}
+.email-link{display:inline-flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--gold);text-decoration:none;padding-bottom:7px;border-bottom:1px solid var(--gold-border);transition:color 0.2s,border-color 0.2s;}
+.email-link:hover{color:var(--gold-light);border-color:var(--gold);}
+.ct-right{display:flex;flex-direction:column;gap:14px;}
+.ct-card{padding:18px 22px;background:var(--bg2);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r-lg);display:flex;align-items:center;gap:14px;}
+.ct-ico{width:38px;height:38px;background:var(--bg3);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.ct-lbl{font-size:0.63rem;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--text3);margin-bottom:3px;}
+.ct-val{font-size:0.87rem;color:var(--text);}
+
+/* FOOTER */
+footer{background:var(--bg);padding:24px 56px;border-top:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.ft-l{display:flex;align-items:center;gap:12px;}
+.ft-mono{width:26px;height:26px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:0.78rem;font-weight:500;color:#000;border-radius:4px;}
+.ft-copy{font-size:0.73rem;color:var(--text3);}
+.ft-r{font-size:0.73rem;color:var(--text3);letter-spacing:0.04em;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){nav{padding:0 28px;}section{padding:80px 28px;}#hero{padding:90px 28px 60px;gap:48px;}#contact{padding:80px 28px;gap:48px;}footer{padding:22px 28px;}.app-hd{padding:26px 28px;}.app-left{padding:26px 28px;}.app-right{padding:26px 22px;}.tab-panel{padding:28px;}.app-ft{padding:14px 28px;}}
+@media(max-width:768px){#hero{grid-template-columns:1fr;padding:88px 22px 56px;}.hero-cards{grid-template-columns:1fr 1fr;}nav{padding:0 22px;}.nav-links{display:none;}section{padding:64px 22px;}.about-grid{grid-template-columns:1fr;gap:36px;}.app-hd{flex-direction:column;}.app-status-badge{margin-left:0;align-self:flex-start;}.app-bd{grid-template-columns:1fr;}.app-left{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.ads-grid{grid-template-columns:1fr;}.pp-meta-bar{flex-direction:column;}.pp-meta-item{border-right:none;border-bottom:1px solid rgba(255,255,255,0.07);}.pp-meta-item:last-child{border-bottom:none;}#contact{grid-template-columns:1fr;gap:36px;}footer{padding:18px 22px;flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-brand">
+    <div class="nav-mono">OZ</div>
+    <span class="nav-name">Ourida Zouhair</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Profil</a></li>
+    <li><a href="#apps">Applications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-pill"><div class="hero-pill-dot"></div><span>Disponible pour missions freelance</span></div>
+    <h1 class="hero-name">Ourida Zouhair</h1>
+    <div class="hero-subtitle">Senior Android &amp; KMP Developer</div>
+    <p class="hero-desc">Ingénieure mobile senior basée à Rabat. Je conçois des applications Android et Kotlin Multiplatform robustes — du fintech bancaire au jeu de cartes traditionnel marocain.</p>
+    <div class="hero-btns">
+      <a href="#apps" class="btn-a">Mes applications</a>
+      <a href="#contact" class="btn-b">Me contacter</a>
+    </div>
+  </div>
+  <div class="hero-cards">
+    <div class="hcard wide">
+      <div class="hcard-num">8+</div>
+      <div class="hcard-lbl">Années d'expérience Android</div>
+      <p class="hcard-sub">Projets fintech, banking, apps grand public — marchés marocain et international.</p>
+    </div>
+    <div class="hcard"><div class="hcard-num">KMP</div><div class="hcard-lbl">Multiplatform</div></div>
+    <div class="hcard"><div class="hcard-num">iOS</div><div class="hcard-lbl">+ Android</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="s-head">
+    <div class="label">Profil</div>
+    <h2>À propos</h2>
+    <p>Développeuse passionnée par l'architecture clean, la qualité de code et l'expérience utilisateur soignée.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Avec <span class="hl">plus de 8 ans d'expérience</span> en développement Android, j'interviens sur des projets à forte complexité technique : applications bancaires multi-modules, calculateurs financiers pour freelances, et jeux mobiles.</p>
+      <p>Mon expertise principale est <span class="hl">Kotlin Multiplatform (KMP/CMP)</span>, qui me permet de partager la logique métier entre Android et iOS tout en gardant des interfaces natives performantes via Compose Multiplatform.</p>
+      <p>Basée à <span class="hl">Rabat, Maroc</span>, je développe des solutions adaptées au marché local — gestion des charges sociales CNSS/IR/AMO, jeux traditionnels comme la Belote Marocaine — tout en respectant les standards internationaux de qualité et de sécurité.</p>
+    </div>
+    <div>
+      <div class="sk-head">Stack technique</div>
+      <div class="sk-row"><span class="sk-name">Kotlin / Java</span><span class="sk-tag e">Expert</span></div>
+      <div class="sk-row"><span class="sk-name">Kotlin Multiplatform</span><span class="sk-tag e">Expert</span></div>
+      <div class="sk-row"><span class="sk-name">Jetpack Compose</span><span class="sk-tag e">Expert</span></div>
+      <div class="sk-row"><span class="sk-name">Compose Multiplatform</span><span class="sk-tag e">Expert</span></div>
+      <div class="sk-row"><span class="sk-name">Clean Architecture</span><span class="sk-tag e">Expert</span></div>
+      <div class="sk-row"><span class="sk-name">MVVM / MVI</span><span class="sk-tag e">Expert</span></div>
+      <div class="sk-row"><span class="sk-name">Hilt / Koin</span><span class="sk-tag">Avancé</span></div>
+      <div class="sk-row"><span class="sk-name">Retrofit / Ktor</span><span class="sk-tag">Avancé</span></div>
+      <div class="sk-row"><span class="sk-name">Room / SQLDelight</span><span class="sk-tag">Avancé</span></div>
+      <div class="sk-row"><span class="sk-name">Google Play / App Store</span><span class="sk-tag">Avancé</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════
+     APPS
+══════════════════════════════════════ -->
+<section id="apps">
+  <div class="s-head">
+    <div class="label">Portfolio</div>
+    <h2>Applications</h2>
+    <p>Chaque application inclut sa politique de confidentialité et son fichier app-ads.txt prêt pour Google Play.</p>
+  </div>
+
+  <div class="apps-list">
+
+    <!-- ══ APP 1 : BELOTIX ══ -->
+    <div class="app-card" id="belotix">
+      <!-- Header -->
+      <div class="app-hd">
+        <div class="app-ico">🃏</div>
+        <div class="app-hd-info">
+          <div class="app-nm">Belotix</div>
+          <div class="app-tl">Le jeu de Belote Marocaine sur mobile</div>
+        </div>
+        <div class="app-status-badge">
+          <div class="app-status-dot"></div>
+          <span>En développement</span>
+        </div>
+      </div>
+
+      <!-- Description + Specs -->
+      <div class="app-bd">
+        <div class="app-left">
+          <p class="app-desc">Belotix est une implémentation fidèle et complète de la Belote Marocaine. L'application reproduit toutes les règles officielles : valeurs d'atout, pénalité de chute, toutes les annonces, et objectif à 501 points. Développée avec Kotlin Multiplatform et Compose Multiplatform.</p>
+          <div class="tech-lbl">Technologies</div>
+          <div class="tags">
+            <span class="tag">Kotlin Multiplatform</span>
+            <span class="tag">Compose Multiplatform</span>
+            <span class="tag">Clean Architecture</span>
+            <span class="tag">MVVM</span>
+            <span class="tag">StateFlow</span>
+            <span class="tag">Coroutines</span>
+            <span class="tag">Game Engine</span>
+          </div>
+        </div>
+        <div class="app-right">
+          <div class="spec"><div class="spec-lbl">Plateformes</div><div class="spec-val">Android · iOS</div></div>
+          <div class="spec"><div class="spec-lbl">Architecture</div><div class="spec-val">Clean Architecture · MVVM</div></div>
+          <div class="spec"><div class="spec-lbl">Objectif</div><div class="spec-val">501 points</div></div>
+          <div class="spec"><div class="spec-lbl">Annonces</div><div class="spec-val">Toutes combinaisons</div></div>
+          <div class="spec"><div class="spec-lbl">Atout</div><div class="spec-val">Valeurs + pénalité chute</div></div>
+          <div class="spec"><div class="spec-lbl">Monétisation</div><div class="spec-val">Google AdMob</div></div>
+        </div>
+      </div>
+
+      <!-- Tabs: Privacy + App-Ads -->
+      <div class="app-tabs-wrap">
+        <div class="app-tabs-nav">
+          <button class="tab-btn active" onclick="switchTab(this,'belotix-privacy')">
+            <span class="tab-icon">🔒</span> Politique de confidentialité
+          </button>
+          <button class="tab-btn" onclick="switchTab(this,'belotix-ads')">
+            <span class="tab-icon">📄</span> App-Ads.txt
+          </button>
+        </div>
+
+        <!-- Privacy Policy -->
+        <div class="tab-panel active" id="belotix-privacy">
+          <div class="pp-meta-bar">
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Application</div><div class="pp-meta-val">Belotix</div></div>
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Développeur</div><div class="pp-meta-val">Ourida Zouhair</div></div>
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Mise à jour</div><div class="pp-meta-val">16 avril 2025</div></div>
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Contact</div><div class="pp-meta-val">zouhair.ourida@gmail.com</div></div>
+          </div>
+          <div class="pp-list">
+            <div class="pp-row"><div class="pp-n">01</div><div class="pp-body"><div class="pp-ttl">Introduction</div><div class="pp-txt">La présente politique décrit comment <strong>Belotix</strong> collecte, utilise et protège les informations des utilisateurs, conformément au RGPD et aux réglementations applicables.</div></div></div>
+            <div class="pp-row"><div class="pp-n">02</div><div class="pp-body"><div class="pp-ttl">Données collectées</div><div class="pp-txt">Les données suivantes peuvent être collectées :<ul><li>Données d'utilisation anonymisées (sessions de jeu, statistiques)</li><li>Identifiant publicitaire (si consentement)</li><li>Données de diagnostic via Firebase Crashlytics (anonymisé)</li></ul><br>Nous <strong>ne collectons pas</strong> : nom, email, téléphone, localisation, ni aucune donnée personnelle identifiable.</div></div></div>
+            <div class="pp-row"><div class="pp-n">03</div><div class="pp-body"><div class="pp-ttl">Utilisation des données</div><div class="pp-txt">Les données sont utilisées exclusivement pour :<ul><li>Améliorer les performances et la stabilité</li><li>Analyser les comportements d'usage de manière agrégée et anonyme</li><li>Afficher des publicités via Google AdMob</li></ul></div></div></div>
+            <div class="pp-row"><div class="pp-n">04</div><div class="pp-body"><div class="pp-ttl">Publicité &amp; Google AdMob</div><div class="pp-txt">Belotix utilise Google AdMob. AdMob peut utiliser l'identifiant publicitaire pour personnaliser les annonces. Désactivation : <strong>Paramètres → Google → Annonces</strong>.<br><br>Plus d'infos : <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></div></div></div>
+            <div class="pp-row"><div class="pp-n">05</div><div class="pp-body"><div class="pp-ttl">Partage des données</div><div class="pp-txt">Nous ne vendons ni ne louons vos données. Partage limité à :<ul><li>Google (AdMob, Firebase) — publicité et analytics</li><li>Autorités compétentes — si la loi l'exige</li></ul></div></div></div>
+            <div class="pp-row"><div class="pp-n">06</div><div class="pp-body"><div class="pp-ttl">Sécurité</div><div class="pp-txt">Nous mettons en œuvre des mesures techniques appropriées pour protéger vos données contre tout accès non autorisé ou destruction.</div></div></div>
+            <div class="pp-row"><div class="pp-n">07</div><div class="pp-body"><div class="pp-ttl">Mineurs</div><div class="pp-txt">Belotix n'est pas destinée aux enfants de moins de 13 ans. Nous ne collectons sciemment aucune donnée provenant de mineurs de moins de 13 ans.</div></div></div>
+            <div class="pp-row"><div class="pp-n">08</div><div class="pp-body"><div class="pp-ttl">Vos droits (RGPD)</div><div class="pp-txt">Vous disposez des droits d'accès, rectification, suppression, opposition et portabilité.<br><br>Contact : <a href="mailto:zouhair.ourida@gmail.com">zouhair.ourida@gmail.com</a></div></div></div>
+            <div class="pp-row"><div class="pp-n">09</div><div class="pp-body"><div class="pp-ttl">Modifications</div><div class="pp-txt">Nous nous réservons le droit de modifier cette politique. Les changements seront publiés sur cette page avec une nouvelle date. L'utilisation continue vaut acceptation.</div></div></div>
+          </div>
+        </div>
+
+        <!-- App-Ads -->
+        <div class="tab-panel" id="belotix-ads">
+          <div class="ads-grid">
+            <div>
+              <p class="ads-intro">Le fichier <code style="font-family:monospace;font-size:0.81rem;background:var(--bg3);color:var(--gold);padding:2px 7px;border-radius:3px;">app-ads.txt</code> doit être hébergé à la racine de votre domaine développeur déclaré dans la Play Console.</p>
+              <div class="url-box">
+                <div class="url-lbl">URL Play Console</div>
+                <div class="url-val">https://ouridazizou.github.io/app-ads.txt</div>
+              </div>
+              <div class="code-box">
+                <div class="code-hd">
+                  <span class="code-fn">app-ads.txt</span>
+                  <span class="code-chip">Publisher ID vérifié</span>
+                </div>
+                <div class="code-bd">
+                  <div class="cc"># app-ads.txt — Belotix</div>
+                  <div class="cc"># Ourida Zouhair</div>
+                  <div class="cc"># https://ouridazizou.github.io</div>
+                  <br>
+                  <div class="cc"># Google AdMob</div>
+                  <div><span class="ck">google.com</span>, <span class="cv">pub-5819047937833345</span>, DIRECT, <span class="cx">f08c47fec0942fa0</span></div>
+                </div>
+              </div>
+              <div class="ibox">
+                <p><code>f08c47fec0942fa0</code> est le tag de certification Google AdMob — ne pas modifier. <code>DIRECT</code> = vente directe de l'inventaire.</p>
+              </div>
+            </div>
+            <div>
+              <div class="steps-lbl">Étapes de déploiement</div>
+              <div class="steps">
+                <div class="st"><div class="st-n"><span class="st-num">1</span></div><div class="st-bd"><div class="st-ttl">Uploader sur GitHub</div><div class="st-desc">Repo <code>ouridazizou.github.io</code> → Add file → Upload <code>app-ads.txt</code> → Commit</div></div></div>
+                <div class="st"><div class="st-n"><span class="st-num">2</span></div><div class="st-bd"><div class="st-ttl">Activer GitHub Pages</div><div class="st-desc">Settings → Pages → branche <code>main</code> → <code>/ (root)</code> → Save</div></div></div>
+                <div class="st"><div class="st-n"><span class="st-num">3</span></div><div class="st-bd"><div class="st-ttl">Vérifier l'accès</div><div class="st-desc">Ouvrir : <code>ouridazizou.github.io/app-ads.txt</code> — doit afficher la ligne AdMob</div></div></div>
+                <div class="st"><div class="st-n"><span class="st-num">4</span></div><div class="st-bd"><div class="st-ttl">Déclarer dans Play Console</div><div class="st-desc">Configuration → Contenu de l'appli → Site développeur : <code>https://ouridazizou.github.io</code></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer card -->
+      <div class="app-ft">
+        <span class="store-lnk">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Google Play Store
+        </span>
+        <span class="cs">Bientôt disponible</span>
+      </div>
+    </div>
+    <!-- ══ FIN BELOTIX ══ -->
+
+    <!-- ══════════════════════════════════
+         TEMPLATE : NOUVELLE APPLICATION
+         Dupliquer ce bloc pour chaque app
+    ═══════════════════════════════════ -->
+    <!--
+    <div class="app-card" id="monapp2">
+      <div class="app-hd">
+        <div class="app-ico">🚀</div>
+        <div class="app-hd-info">
+          <div class="app-nm">Nom App</div>
+          <div class="app-tl">Description courte</div>
+        </div>
+        <div class="app-status-badge">
+          <div class="app-status-dot"></div>
+          <span>En développement</span>
+        </div>
+      </div>
+      <div class="app-bd">
+        <div class="app-left">
+          <p class="app-desc">Description de l'application...</p>
+          <div class="tech-lbl">Technologies</div>
+          <div class="tags">
+            <span class="tag">Kotlin</span>
+          </div>
+        </div>
+        <div class="app-right">
+          <div class="spec"><div class="spec-lbl">Plateformes</div><div class="spec-val">Android</div></div>
+        </div>
+      </div>
+      <div class="app-tabs-wrap">
+        <div class="app-tabs-nav">
+          <button class="tab-btn active" onclick="switchTab(this,'app2-privacy')">🔒 Politique de confidentialité</button>
+          <button class="tab-btn" onclick="switchTab(this,'app2-ads')">📄 App-Ads.txt</button>
+        </div>
+        <div class="tab-panel active" id="app2-privacy">
+          ... contenu privacy policy ...
+        </div>
+        <div class="tab-panel" id="app2-ads">
+          ... contenu app-ads.txt ...
+        </div>
+      </div>
+      <div class="app-ft">
+        <span class="store-lnk">Google Play Store</span>
+        <span class="cs">Bientôt disponible</span>
+      </div>
+    </div>
+    -->
+
+  </div><!-- /apps-list -->
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="ct-left">
+    <div class="label" style="margin-bottom:14px;">Contact</div>
+    <h2>Travaillons ensemble</h2>
+    <p>Disponible pour des projets freelance, missions de conseil en architecture mobile, ou collaboration sur des applications KMP ciblant le marché marocain et international.</p>
+    <a href="mailto:zouhair.ourida@gmail.com" class="email-link">
+      zouhair.ourida@gmail.com
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <div class="ct-right">
+    <div class="ct-card"><div class="ct-ico">📍</div><div><div class="ct-lbl">Localisation</div><div class="ct-val">Rabat, Maroc</div></div></div>
+    <div class="ct-card"><div class="ct-ico">💼</div><div><div class="ct-lbl">Spécialité</div><div class="ct-val">Android · Kotlin Multiplatform</div></div></div>
+    <div class="ct-card"><div class="ct-ico">🌍</div><div><div class="ct-lbl">Marchés</div><div class="ct-val">Maroc · International</div></div></div>
+    <div class="ct-card"><div class="ct-ico">⚡</div><div><div class="ct-lbl">Disponibilité</div><div class="ct-val">Freelance · Conseil · Collaboration</div></div></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-l">
+    <div class="ft-mono">OZ</div>
+    <span class="ft-copy">© 2025 Ourida Zouhair — Tous droits réservés</span>
+  </div>
+  <div class="ft-r">Android · Kotlin Multiplatform · Rabat, Maroc</div>
+</footer>
+
+<script>
+function switchTab(btn, panelId) {
+  // Find parent tabs wrapper
+  const tabsWrap = btn.closest('.app-tabs-wrap');
+  // Deactivate all buttons in this card
+  tabsWrap.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  // Deactivate all panels in this card
+  tabsWrap.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  // Activate clicked button and target panel
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+</script>
+</body>
+</html>
