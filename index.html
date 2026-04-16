@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ourida Zouhair — Android & KMP Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8CB7A;
+    --gold-dim: #7A6028;
+    --black: #0A0A0A;
+    --surface: #111111;
+    --surface2: #1A1A1A;
+    --surface3: #222222;
+    --text: #F0EDE5;
+    --text-muted: #888880;
+    --text-dim: #555550;
+    --border: rgba(201,168,76,0.2);
+    --border-bright: rgba(201,168,76,0.5);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 4rem;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-weight: 400;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 40%, rgba(201,168,76,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 20% 70%, rgba(201,168,76,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 0.5px;
+    background: var(--gold);
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  h1 span { color: var(--gold); }
+  .hero-title-line2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+  }
+  .hero-desc {
+    max-width: 520px;
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    border-left: 1px solid var(--border-bright);
+    padding-left: 1.5rem;
+  }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-gold {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: var(--gold);
+    color: var(--black);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.3s, transform 0.2s;
+  }
+  .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-outline {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    border: 0.5px solid var(--border-bright);
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+
+  .hero-stats {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    display: flex;
+    gap: 3rem;
+  }
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 6rem 4rem; }
+  .section-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 0.5px;
+    background: var(--gold);
+  }
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+  .divider {
+    width: 100%;
+    height: 0.5px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--surface); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.9;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .skill-item {
+    padding: 1rem 0;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .skill-item:nth-child(odd) { border-right: 0.5px solid var(--border); padding-right: 1.5rem; }
+  .skill-item:nth-child(even) { padding-left: 1.5rem; }
+  .skill-dot {
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .skill-name { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* ─── APPS ─── */
+  #apps { background: var(--black); }
+  .app-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .app-card:hover { border-color: var(--border-bright); }
+  .app-card-header {
+    padding: 2.5rem;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+  .app-icon {
+    width: 64px;
+    height: 64px;
+    background: var(--surface3);
+    border: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .app-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .app-tagline { font-size: 0.85rem; color: var(--gold); letter-spacing: 0.05em; }
+  .app-badge {
+    margin-left: auto;
+    padding: 0.3rem 0.8rem;
+    border: 0.5px solid var(--gold-dim);
+    color: var(--gold-dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+  .app-body { padding: 2.5rem; }
+  .app-desc {
+    color: var(--text-muted);
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+  .app-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .app-feature {
+    background: var(--surface);
+    padding: 1.25rem;
+  }
+  .app-feature-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.4rem;
+  }
+  .app-feature-val {
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .app-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .tech-tag {
+    padding: 0.25rem 0.75rem;
+    border: 0.5px solid var(--border);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    background: var(--surface2);
+  }
+  .app-footer {
+    padding: 1.5rem 2.5rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .store-badge-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .store-badge-link:hover { color: var(--gold); }
+  .coming-soon-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background: rgba(201,168,76,0.1);
+    color: var(--gold-dim);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ─── PRIVACY POLICY ─── */
+  #privacy { background: var(--surface); }
+  .privacy-wrapper {
+    max-width: 800px;
+  }
+  .privacy-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .privacy-meta-item { }
+  .privacy-meta-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.25rem;
+  }
+  .privacy-meta-val { font-size: 0.9rem; color: var(--gold); }
+
+  .privacy-section { margin-bottom: 2.5rem; }
+  .privacy-section h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .privacy-section h3::before {
+    content: attr(data-n);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gold-dim);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    width: 24px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .privacy-section p, .privacy-section li {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.9;
+  }
+  .privacy-section ul {
+    list-style: none;
+    padding-left: 0.5rem;
+  }
+  .privacy-section ul li::before {
+    content: '—';
+    color: var(--gold-dim);
+    margin-right: 0.75rem;
+  }
+  .privacy-section ul li { margin-bottom: 0.3rem; }
+
+  /* ─── APP-ADS.TXT ─── */
+  #appads { background: var(--black); }
+  .appads-wrapper { max-width: 800px; }
+  .appads-intro {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    line-height: 1.9;
+  }
+  .code-block {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    padding: 1.5rem 2rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: var(--gold-light);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-block-label {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .code-comment { color: var(--text-dim); }
+  .code-key { color: var(--gold); }
+  .code-val { color: #7EB8A8; }
+
+  .appads-steps {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 0.5px solid var(--border);
+  }
+  .appads-step {
+    background: var(--surface);
+    padding: 1.5rem;
+  }
+  .appads-step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gold-dim);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+  .appads-step-title {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.05em;
+  }
+  .appads-step-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--surface);
+    text-align: center;
+    padding: 6rem 4rem;
+  }
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+  .contact-desc {
+    color: var(--text-muted);
+    margin-bottom: 2.5rem;
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 0.5px solid var(--gold-dim);
+    padding-bottom: 0.2rem;
+    transition: color 0.3s;
+  }
+  .contact-email:hover { color: var(--gold-light); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black);
+    padding: 2rem 4rem;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+  .footer-right {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 2rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 4rem 2rem; }
+    #hero { padding: 7rem 2rem 10rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-stats { right: 2rem; bottom: 2rem; gap: 1.5rem; }
+    .app-features { grid-template-columns: 1fr 1fr; }
+    .appads-steps { grid-template-columns: 1fr; }
+    footer { padding: 2rem; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    h1 { font-size: 2.8rem; }
+    .hero-stats { flex-direction: column; gap: 1rem; }
+    .app-card-header { flex-direction: column; }
+    .app-badge { margin-left: 0; }
+    .app-features { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-item:nth-child(odd) { border-right: none; padding-right: 0; }
+    .skill-item:nth-child(even) { padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">OZ</a>
+  <ul class="nav-links">
+    <li><a href="#about">Profil</a></li>
+    <li><a href="#apps">Applications</a></li>
+    <li><a href="#privacy">Privacy Policy</a></li>
+    <li><a href="#appads">App-Ads</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow">Android &amp; KMP Developer</div>
+  <h1>Ourida<br><span>Zouhair</span></h1>
+  <div class="hero-title-line2">Senior Mobile Engineer</div>
+  <p class="hero-desc">
+    Ingénieure mobile senior basée à Rabat, spécialisée en développement Android natif et Kotlin Multiplatform. Je conçois des applications robustes, élégantes et performantes — du fintech au jeu de cartes traditionnel marocain.
+  </p>
+  <div class="hero-ctas">
+    <a href="#apps" class="btn-gold">Voir mes applications</a>
+    <a href="#contact" class="btn-outline">Me contacter</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">8+</div>
+      <div class="stat-label">Ans d'expérience</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">KMP</div>
+      <div class="stat-label">Multiplatform</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-eyebrow">Profil</div>
+  <h2>À propos</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Développeuse Android senior avec plus de 8 ans d'expérience, je travaille sur des projets ambitieux alliant architecture clean, performance et expérience utilisateur soignée.
+      </p>
+      <p>
+        Mon expertise couvre le développement natif Android ainsi que Kotlin Multiplatform (KMP/CMP) — me permettant de livrer des bases de code partagées entre Android et iOS. J'interviens sur des secteurs variés : fintech/banking, applications utilitaires grand public, et jeux mobiles.
+      </p>
+      <p>
+        Basée à Rabat, je développe des solutions ciblant le marché marocain, avec une attention particulière aux spécificités locales (charges sociales CNSS/IR/AMO, jeux traditionnels comme la Belote Marocaine, etc.).
+      </p>
+    </div>
+    <div>
+      <div class="section-eyebrow" style="margin-bottom: 1.5rem;">Stack technique</div>
+      <div class="skills-grid">
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Kotlin / Java</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Kotlin Multiplatform</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Jetpack Compose</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Compose Multiplatform</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Clean Architecture</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">MVVM / MVI</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Hilt / Koin</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Retrofit / Ktor</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Room / SQLDelight</span></div>
+        <div class="skill-item"><div class="skill-dot"></div><span class="skill-name">Google Play / App Store</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- APPS -->
+<section id="apps">
+  <div class="section-eyebrow">Portfolio</div>
+  <h2>Applications</h2>
+
+  <!-- BELOTIX -->
+  <div class="app-card">
+    <div class="app-card-header">
+      <div class="app-icon">🃏</div>
+      <div>
+        <div class="app-name">Belotix</div>
+        <div class="app-tagline">Le jeu de Belote Marocaine sur mobile</div>
+      </div>
+      <div class="app-badge">Bientôt sur Play Store</div>
+    </div>
+    <div class="app-body">
+      <p class="app-desc">
+        Belotix est une implémentation fidèle et complète de la Belote Marocaine — le jeu de cartes traditionnel incontournable au Maroc. Développée avec Kotlin Multiplatform et Compose Multiplatform, l'application reproduit toutes les règles officielles : valeurs d'atout, pénalité de chute, annonces, et objectif à 501 points. L'interface, inspirée de l'esthétique des cartes à jouer marocaines classiques, offre une expérience à la fois authentique et moderne.
+      </p>
+      <div class="app-features">
+        <div class="app-feature">
+          <div class="app-feature-label">Plateformes</div>
+          <div class="app-feature-val">Android · iOS</div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-label">Architecture</div>
+          <div class="app-feature-val">Clean Arch · MVVM</div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-label">Objectif</div>
+          <div class="app-feature-val">501 points</div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-label">Règles</div>
+          <div class="app-feature-val">Belote Marocaine complète</div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-label">Annonces</div>
+          <div class="app-feature-val">Toutes combinaisons</div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-label">Atout</div>
+          <div class="app-feature-val">Valeurs + pénalité chute</div>
+        </div>
+      </div>
+      <div class="app-tech">
+        <span class="tech-tag">Kotlin Multiplatform</span>
+        <span class="tech-tag">Compose Multiplatform</span>
+        <span class="tech-tag">Clean Architecture</span>
+        <span class="tech-tag">MVVM</span>
+        <span class="tech-tag">StateFlow</span>
+        <span class="tech-tag">Coroutines</span>
+        <span class="tech-tag">Game Logic</span>
+      </div>
+    </div>
+    <div class="app-footer">
+      <div class="store-badge-link" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Google Play Store
+      </div>
+      <span class="coming-soon-badge">Prochainement disponible</span>
+    </div>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- PRIVACY POLICY -->
+<section id="privacy">
+  <div class="section-eyebrow">Légal</div>
+  <h2>Privacy Policy</h2>
+  <div class="privacy-wrapper">
+    <div class="privacy-meta">
+      <div class="privacy-meta-item">
+        <div class="privacy-meta-label">Application</div>
+        <div class="privacy-meta-val">Belotix</div>
+      </div>
+      <div class="privacy-meta-item">
+        <div class="privacy-meta-label">Développeur</div>
+        <div class="privacy-meta-val">Ourida Zouhair</div>
+      </div>
+      <div class="privacy-meta-item">
+        <div class="privacy-meta-label">Dernière mise à jour</div>
+        <div class="privacy-meta-val">16 avril 2025</div>
+      </div>
+      <div class="privacy-meta-item">
+        <div class="privacy-meta-label">Contact</div>
+        <div class="privacy-meta-val">contact@ouridazouhair.dev</div>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="01.">Introduction</h3>
+      <p>La présente politique de confidentialité décrit comment l'application <strong>Belotix</strong> collecte, utilise et protège les informations des utilisateurs. Nous nous engageons à respecter votre vie privée et à traiter vos données personnelles conformément au RGPD et aux règlements applicables.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="02.">Données collectées</h3>
+      <p>Belotix est une application de jeu de cartes. Les données suivantes peuvent être collectées :</p>
+      <ul>
+        <li>Données d'utilisation anonymisées (sessions de jeu, statistiques de parties)</li>
+        <li>Identifiant publicitaire (si vous avez consenti à la publicité personnalisée)</li>
+        <li>Données de diagnostic et rapports de crash (via Firebase Crashlytics, anonymisé)</li>
+      </ul>
+      <p style="margin-top: 1rem;">Nous <strong>ne collectons pas</strong> : nom, email, numéro de téléphone, localisation précise, contacts, ou toute donnée personnelle identifiable.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="03.">Utilisation des données</h3>
+      <p>Les données collectées sont utilisées exclusivement pour :</p>
+      <ul>
+        <li>Améliorer les performances et la stabilité de l'application</li>
+        <li>Analyser les comportements d'usage de manière agrégée et anonyme</li>
+        <li>Afficher des publicités pertinentes via Google AdMob (si applicable)</li>
+      </ul>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="04.">Publicité &amp; AdMob</h3>
+      <p>Belotix utilise Google AdMob pour afficher des annonces publicitaires. Google AdMob peut utiliser l'identifiant publicitaire de votre appareil pour personnaliser les annonces. Vous pouvez désactiver la personnalisation des publicités depuis les paramètres de votre appareil (Paramètres → Google → Annonces).</p>
+      <p style="margin-top: 0.75rem;">Pour en savoir plus sur la politique de confidentialité de Google : <span style="color: var(--gold); font-size:0.85rem;">policies.google.com/privacy</span></p>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="05.">Partage des données</h3>
+      <p>Nous ne vendons, n'échangeons et ne louons pas vos informations personnelles à des tiers. Les données peuvent être partagées uniquement avec :</p>
+      <ul>
+        <li>Google (AdMob, Firebase) — dans le cadre de la publicité et des analytics</li>
+        <li>Les autorités compétentes — si la loi l'exige</li>
+      </ul>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="06.">Sécurité</h3>
+      <p>Nous mettons en œuvre des mesures techniques appropriées pour protéger vos données contre tout accès non autorisé, modification, divulgation ou destruction. Cependant, aucun système de transmission sur Internet n'est entièrement sécurisé.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="07.">Mineurs</h3>
+      <p>Belotix n'est pas destinée aux enfants de moins de 13 ans. Nous ne collectons sciemment aucune donnée personnelle provenant d'enfants de moins de 13 ans.</p>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="08.">Vos droits</h3>
+      <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+      <ul>
+        <li>Droit d'accès à vos données personnelles</li>
+        <li>Droit de rectification ou suppression</li>
+        <li>Droit d'opposition au traitement</li>
+        <li>Droit à la portabilité des données</li>
+      </ul>
+      <p style="margin-top: 0.75rem;">Pour exercer ces droits, contactez-nous à : <span style="color: var(--gold);">contact@ouridazouhair.dev</span></p>
+    </div>
+
+    <div class="privacy-section">
+      <h3 data-n="09.">Modifications</h3>
+      <p>Nous nous réservons le droit de modifier cette politique à tout moment. Les modifications seront publiées sur cette page avec une nouvelle date de mise à jour. Votre utilisation continue de l'application après modification vaut acceptation de la nouvelle politique.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- APP-ADS.TXT -->
+<section id="appads">
+  <div class="section-eyebrow">Monétisation</div>
+  <h2>App-Ads.txt</h2>
+  <div class="appads-wrapper">
+    <p class="appads-intro">
+      Le fichier <code style="color: var(--gold); font-size: 0.85rem;">app-ads.txt</code> (Authorized Sellers for Apps) est un mécanisme de transparence publicitaire requis par Google Play. Il déclare les vendeurs autorisés à vendre l'inventaire publicitaire de vos applications, protégeant ainsi contre la fraude publicitaire.
+      <br><br>
+      Ce fichier doit être hébergé à la racine de votre site web développeur (celui déclaré dans la fiche Play Store) : <span style="color: var(--gold);">https://ouridazouhair.dev/app-ads.txt</span>
+    </p>
+
+    <div class="section-eyebrow" style="margin-bottom: 1rem;">Contenu du fichier app-ads.txt</div>
+    <div class="code-block">
+      <span class="code-block-label">app-ads.txt</span>
+<span class="code-comment"># app-ads.txt — Ourida Zouhair</span>
+<span class="code-comment"># Site développeur : https://ouridazouhair.dev</span>
+<span class="code-comment"># Dernière mise à jour : 2025-04-16</span>
+<br>
+<span class="code-comment"># ── Google AdMob ──────────────────────────────────</span>
+<span class="code-key">google.com</span>, <span class="code-val">YOUR_PUBLISHER_ID</span>, DIRECT, f08c47fec0942fa0
+<br>
+<span class="code-comment"># ── Google Ad Manager (si utilisé) ───────────────</span>
+<span class="code-comment"># googleadservices.com, YOUR_PUBLISHER_ID, DIRECT, f08c47fec0942fa0</span>
+<br>
+<span class="code-comment"># Remplacer YOUR_PUBLISHER_ID par votre pub-XXXXXXXXXXXXXXXX</span>
+<span class="code-comment"># Exemple : pub-1234567890123456</span>
+    </div>
+
+    <div class="section-eyebrow" style="margin-bottom: 1rem; margin-top: 2.5rem;">Étapes de déploiement</div>
+    <div class="appads-steps">
+      <div class="appads-step">
+        <div class="appads-step-num">01</div>
+        <div class="appads-step-title">Récupérer le Publisher ID</div>
+        <div class="appads-step-desc">Dans AdMob → Paramètres du compte → Informations du compte → ID éditeur (format: pub-XXXXXXXXXXXXXXXX)</div>
+      </div>
+      <div class="appads-step">
+        <div class="appads-step-num">02</div>
+        <div class="appads-step-title">Héberger le fichier</div>
+        <div class="appads-step-desc">Placer le fichier à la racine de votre domaine développeur : ouridazouhair.dev/app-ads.txt — accessible publiquement en HTTP/HTTPS</div>
+      </div>
+      <div class="appads-step">
+        <div class="appads-step-num">03</div>
+        <div class="appads-step-title">Déclarer dans Play Store</div>
+        <div class="appads-step-desc">Dans Play Console → Configuration de l'application → Contenu de l'appli — vérifier que l'URL du site développeur est correcte</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem; padding: 1.5rem; border: 0.5px solid var(--border); background: var(--surface);">
+      <div class="section-eyebrow" style="margin-bottom: 0.75rem;">Note importante</div>
+      <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8;">
+        La valeur <code style="color: var(--gold);">f08c47fec0942fa0</code> est le tag de certification officiel de Google AdMob — ne pas modifier. La mention <code style="color: var(--gold);">DIRECT</code> indique que vous vendez directement votre inventaire via AdMob. Si vous passez par un intermédiaire, utilisez <code style="color: var(--gold);">RESELLER</code>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-eyebrow" style="justify-content: center;">Contact</div>
+    <h2 style="text-align: center;">Travaillons ensemble</h2>
+    <p class="contact-desc">
+      Disponible pour des projets freelance, missions de conseil en architecture mobile, ou collaboration sur des applications KMP ciblant le marché marocain et international.
+    </p>
+    <a href="mailto:contact@ouridazouhair.dev" class="contact-email">contact@ouridazouhair.dev</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2025 Ourida Zouhair — All rights reserved</div>
+  <div class="footer-right">Android · Kotlin Multiplatform · Rabat, Maroc</div>
+</footer>
+
+</body>
+</html>
