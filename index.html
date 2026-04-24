@@ -560,12 +560,126 @@ footer{
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
           Google Play Store
         </span>
+        <a href="https://play.google.com/store/apps/details?id=com.oz.belote.android" target="_blank" class="btn-a">Voir sur Google Play</a>
+      </div>
+    </div>
 
-        <a href="https://play.google.com/store/apps/details?id=com.oz.belote.android"
-           target="_blank"
-           class="btn-a">
-           Voir sur Google Play
-        </a>
+    <!-- APP 2 : 2048 -->
+    <div class="app-card" id="app2048">
+      <div class="app-hd">
+        <div class="app-ico">🔢</div>
+        <div class="app-hd-info">
+          <div class="app-nm">2048</div>
+          <div class="app-tl">Le puzzle de nombres addictif</div>
+        </div>
+        <div class="app-status-badge">
+          <div class="app-status-dot"></div>
+          <span>In Store</span>
+        </div>
+      </div>
+
+      <div class="app-bd">
+        <div class="app-left">
+          <p class="app-desc">2048 est une implémentation élégante et fluide du célèbre puzzle de glissement de tuiles. Faites glisser pour fusionner les chiffres et atteignez la tuile 2048 — et au-delà. Développée avec Kotlin Multiplatform et Compose Multiplatform pour Android et iOS, avec des animations soignées et une progression de score persistante.</p>
+          <div class="tech-lbl">Technologies</div>
+          <div class="tags">
+            <span class="tag">Kotlin Multiplatform</span>
+            <span class="tag">Compose Multiplatform</span>
+            <span class="tag">Clean Architecture</span>
+            <span class="tag">MVVM</span>
+            <span class="tag">StateFlow</span>
+            <span class="tag">Coroutines</span>
+            <span class="tag">SQLDelight</span>
+            <span class="tag">Google AdMob</span>
+            <span class="tag">In-App Purchase</span>
+          </div>
+        </div>
+        <div class="app-right">
+          <div class="spec"><div class="spec-lbl">Plateformes</div><div class="spec-val">Android · iOS</div></div>
+          <div class="spec"><div class="spec-lbl">Architecture</div><div class="spec-val">Clean Architecture · MVVM</div></div>
+          <div class="spec"><div class="spec-lbl">Objectif</div><div class="spec-val">Atteindre la tuile 2048</div></div>
+          <div class="spec"><div class="spec-lbl">Score</div><div class="spec-val">Meilleur score persistant</div></div>
+          <div class="spec"><div class="spec-lbl">Thèmes</div><div class="spec-val">Multiples (via IAP)</div></div>
+          <div class="spec"><div class="spec-lbl">Monétisation</div><div class="spec-val">AdMob · Achats in-app</div></div>
+        </div>
+      </div>
+
+      <div class="app-tabs-wrap">
+        <div class="app-tabs-nav">
+          <button class="tab-btn active" onclick="switchTab(this,'app2048-privacy')">
+            <span class="tab-icon">🔒</span> Politique de confidentialité
+          </button>
+          <button class="tab-btn" onclick="switchTab(this,'app2048-ads')">
+            <span class="tab-icon">📄</span> App-Ads.txt
+          </button>
+        </div>
+
+        <div class="tab-panel active" id="app2048-privacy">
+          <div class="pp-meta-bar">
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Application</div><div class="pp-meta-val">2048</div></div>
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Développeur</div><div class="pp-meta-val">Ourida Zouhair</div></div>
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Mise à jour</div><div class="pp-meta-val">24 avril 2025</div></div>
+            <div class="pp-meta-item"><div class="pp-meta-lbl">Contact</div><div class="pp-meta-val">zouhair.ourida@gmail.com</div></div>
+          </div>
+          <div class="pp-list">
+            <div class="pp-row"><div class="pp-n">01</div><div class="pp-body"><div class="pp-ttl">Introduction</div><div class="pp-txt">La présente politique décrit comment <strong>2048</strong> collecte, utilise et protège les informations des utilisateurs, conformément au RGPD et aux réglementations applicables.</div></div></div>
+            <div class="pp-row"><div class="pp-n">02</div><div class="pp-body"><div class="pp-ttl">Données collectées</div><div class="pp-txt">Les données suivantes peuvent être collectées :<ul><li>Données d'utilisation anonymisées (sessions de jeu, scores, statistiques)</li><li>Identifiant publicitaire (si consentement accordé)</li><li>Données de diagnostic via Firebase Crashlytics (anonymisé)</li><li>Historique des achats in-app (via Google Play / App Store — géré par la plateforme)</li></ul><br>Nous <strong>ne collectons pas</strong> : nom, email, téléphone, localisation, ni aucune donnée personnelle identifiable directement.</div></div></div>
+            <div class="pp-row"><div class="pp-n">03</div><div class="pp-body"><div class="pp-ttl">Utilisation des données</div><div class="pp-txt">Les données sont utilisées exclusivement pour :<ul><li>Améliorer les performances et la stabilité de l'application</li><li>Analyser les comportements d'usage de manière agrégée et anonyme</li><li>Afficher des publicités personnalisées via Google AdMob</li><li>Gérer et restaurer les achats in-app</li></ul></div></div></div>
+            <div class="pp-row"><div class="pp-n">04</div><div class="pp-body"><div class="pp-ttl">Publicité &amp; Google AdMob</div><div class="pp-txt">2048 utilise Google AdMob pour afficher des publicités. AdMob peut utiliser l'identifiant publicitaire de votre appareil pour personnaliser les annonces selon vos centres d'intérêt.<br><br>Les utilisateurs ayant effectué un achat pour supprimer les publicités ne sont plus soumis à la collecte publicitaire AdMob.<br><br>Désactivation : <strong>Paramètres → Google → Annonces → Désactiver la personnalisation</strong>.<br><br>Plus d'infos : <a href="https://policies.google.com/privacy" target="_blank">policies.google.com/privacy</a></div></div></div>
+            <div class="pp-row"><div class="pp-n">05</div><div class="pp-body"><div class="pp-ttl">Achats in-app</div><div class="pp-txt">2048 propose des achats in-app optionnels (ex. : suppression des publicités, thèmes visuels). Ces transactions sont traitées exclusivement par <strong>Google Play</strong> ou <strong>Apple App Store</strong>. Nous n'avons pas accès aux informations de paiement. Les achats sont restaurables depuis le menu de l'application.</div></div></div>
+            <div class="pp-row"><div class="pp-n">06</div><div class="pp-body"><div class="pp-ttl">Partage des données</div><div class="pp-txt">Nous ne vendons ni ne louons vos données. Partage limité à :<ul><li>Google (AdMob, Firebase, Play Billing) — publicité, analytics et facturation</li><li>Apple (App Store, StoreKit) — facturation iOS</li><li>Autorités compétentes — si la loi l'exige</li></ul></div></div></div>
+            <div class="pp-row"><div class="pp-n">07</div><div class="pp-body"><div class="pp-ttl">Sécurité</div><div class="pp-txt">Nous mettons en œuvre des mesures techniques appropriées pour protéger vos données contre tout accès non autorisé, altération ou destruction. Aucune donnée sensible n'est stockée sur nos serveurs.</div></div></div>
+            <div class="pp-row"><div class="pp-n">08</div><div class="pp-body"><div class="pp-ttl">Mineurs</div><div class="pp-txt">2048 n'est pas spécifiquement destinée aux enfants de moins de 13 ans. Nous ne collectons sciemment aucune donnée provenant de mineurs de moins de 13 ans. Si vous êtes parent et pensez que votre enfant nous a fourni des informations, contactez-nous.</div></div></div>
+            <div class="pp-row"><div class="pp-n">09</div><div class="pp-body"><div class="pp-ttl">Vos droits (RGPD)</div><div class="pp-txt">Vous disposez des droits d'accès, rectification, suppression, opposition et portabilité de vos données.<br><br>Contact : <a href="mailto:zouhair.ourida@gmail.com">zouhair.ourida@gmail.com</a></div></div></div>
+            <div class="pp-row"><div class="pp-n">10</div><div class="pp-body"><div class="pp-ttl">Modifications</div><div class="pp-txt">Nous nous réservons le droit de modifier cette politique. Les changements seront publiés sur cette page avec une nouvelle date. L'utilisation continue de l'application vaut acceptation de la politique mise à jour.</div></div></div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="app2048-ads">
+          <div class="ads-grid">
+            <div>
+              <p class="ads-intro">Le fichier <code style="font-family:monospace;font-size:0.81rem;background:var(--bg3);color:var(--green);padding:2px 7px;border-radius:3px;">app-ads.txt</code> est partagé pour toutes les applications publiées sous le même compte AdMob.</p>
+              <div class="url-box">
+                <div class="url-lbl">URL Play Console</div>
+                <div class="url-val">https://ouridazizou.github.io/app-ads.txt</div>
+              </div>
+              <div class="code-box">
+                <div class="code-hd">
+                  <span class="code-fn">app-ads.txt</span>
+                  <span class="code-chip">Publisher ID vérifié</span>
+                </div>
+                <div class="code-bd">
+                  <div class="cc"># app-ads.txt — 2048</div>
+                  <div class="cc"># Ourida Zouhair</div>
+                  <div class="cc"># https://ouridazizou.github.io</div>
+                  <br>
+                  <div class="cc"># Google AdMob</div>
+                  <div><span class="ck">google.com</span>, <span class="cv">pub-5819047937833345</span>, DIRECT, <span class="cx">f08c47fec0942fa0</span></div>
+                </div>
+              </div>
+              <div class="ibox">
+                <p>Le même Publisher ID AdMob <code>pub-5819047937833345</code> couvre toutes vos applications. Un seul fichier <code>app-ads.txt</code> à la racine suffit pour l'ensemble du portfolio.</p>
+              </div>
+            </div>
+            <div>
+              <div class="steps-lbl">Étapes de déploiement</div>
+              <div class="steps">
+                <div class="st"><div class="st-n"><span class="st-num">1</span></div><div class="st-bd"><div class="st-ttl">Vérifier le fichier existant</div><div class="st-desc">Le fichier <code>app-ads.txt</code> de Belotix est déjà valide — aucune modification nécessaire si le même compte AdMob est utilisé.</div></div></div>
+                <div class="st"><div class="st-n"><span class="st-num">2</span></div><div class="st-bd"><div class="st-ttl">Déclarer dans Play Console</div><div class="st-desc">Configuration → Contenu de l'appli → Site développeur : <code>https://ouridazizou.github.io</code></div></div></div>
+                <div class="st"><div class="st-n"><span class="st-num">3</span></div><div class="st-bd"><div class="st-ttl">Vérifier AdMob</div><div class="st-desc">Dans la console AdMob, s'assurer que l'app 2048 est bien associée au compte <code>pub-5819047937833345</code>.</div></div></div>
+                <div class="st"><div class="st-n"><span class="st-num">4</span></div><div class="st-bd"><div class="st-ttl">Configurer les IAP</div><div class="st-desc">Google Play Console → Monétisation → Produits intégrés — créer les SKUs pour la suppression des pubs et les thèmes.</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-ft">
+        <span class="store-lnk">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Google Play Store
+        </span>
+        <a href="https://play.google.com/store/apps/details?id=com.oz.puzzle2048.android" target="_blank" class="btn-a">Voir sur Google Play</a>
       </div>
     </div>
 
